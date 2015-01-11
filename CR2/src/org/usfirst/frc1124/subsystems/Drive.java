@@ -21,5 +21,15 @@ public class Drive extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    public Drive(int pwmL, int pwmR) {
+    	super();
+    	drive = new RobotDrive(pwmL, pwmR);
+    }
+    
+    public Drive(int pwmTL, int pwmBL, int pwmTR, int pwmBR) {
+    	super();
+    	drive = new RobotDrive(pwmTL, pwmBL, pwmTR, pwmBR);
+    }
 }
 

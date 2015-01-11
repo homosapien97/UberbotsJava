@@ -42,4 +42,8 @@ public class RobotMap {
 	public static final int solShooterA = 4;
 	public static final int solShifterA = 5;
 	public static final int solShifterB = 6;
+	
+	public static final int usbJoystick1 = 0;
+	public static final int usbJoystick2 = 1;
+	public static final int usbJoystick3 = 2;
 }
