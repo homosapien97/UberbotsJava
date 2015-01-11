@@ -1,4 +1,0 @@
-INDEX VERSION 1.127+C:\Users\Christian\Documents\GitHub\UberbotsJava\.metadata\.plugins\org.eclipse.jdt.core
-3140658601.index
-2451124937.index
-3944301882.index
