@@ -2,10 +2,7 @@ package org.usfirst.frc1124.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc1124.OI;
-import org.usfirst.frc1124.RobotMap;
-import org.usfirst.frc1124.subsystems.Drive;
 import org.usfirst.frc1124.subsystems.ExampleSubsystem;
 
 /**
@@ -19,7 +16,6 @@ public abstract class CommandBase extends Command {
     public static OI oi;
     // Create a single static instance of all of your subsystems
     public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    public static Drive drive = new Drive(RobotMap.pwmLeftDrive, RobotMap.pwmRightDrive);
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
