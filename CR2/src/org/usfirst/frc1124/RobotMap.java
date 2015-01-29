@@ -19,6 +19,9 @@ public class RobotMap {
 	
 	public static final int pwmLeftDrive = 2;
 	public static final int pwmRightDrive = 1;
+	
+	public static final int pwmHDrive = 5; //for use in robots with a fifth wheel in an hdrive config
+	
 	public static final int pwmPickupArm = 3;
 	public static final int pwmPickupBelt = 4;
 	
