@@ -13,9 +13,12 @@ package org.usfirst.frc1124;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+
 import org.usfirst.frc1124.commands.CommandBase;
 import org.usfirst.frc1124.commands.ExampleCommand;
 
+
+import org.usfirst.frc1124.ub.enums.Mode;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -48,6 +51,7 @@ public class CommandBasedRobot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         autonomousCommand.start();
+        RobotState.mode = Mode.AUTONOMOUS;
     }
 
     /**
@@ -63,6 +67,8 @@ public class CommandBasedRobot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
+		RobotState.mode = Mode.TELEOP;
+		
     }
 
     /**

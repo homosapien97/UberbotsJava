@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1124.OI;
 import org.usfirst.frc1124.RobotMap;
-import org.usfirst.frc1124.subsystems.Drive;
+import org.usfirst.frc1124.subsystems.All;
+import org.usfirst.frc1124.subsystems.DriveSubsystem;
 import org.usfirst.frc1124.subsystems.ExampleSubsystem;
 
 /**
@@ -18,8 +19,21 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     // Create a single static instance of all of your subsystems
-    public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    public static Drive drive = new Drive(RobotMap.pwmLeftDrive, RobotMap.pwmRightDrive);
+    
+//    public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+//    public static DriveSubsystem drive = new DriveSubsystem(RobotMap.pwmLeftDrive, RobotMap.pwmRightDrive);
+//    
+    /*
+     * So, it seems like I will never have more than one instance of a subsystem, so I'm just going to make
+     * everything in each susbsystem static and create an instance of them here just for requires()
+     * statements. Actually, I think I won't declare them here, I'll do it in a separate file. Meh.
+     * 
+     * Also it turns out that the subsystems need to be initialized at some point including the 
+     * super() initializer, since this adds the subsystem to a registry that is used elsewhere behind the
+     * scenes.
+     */
+    
+    {All all = new All();} //this is just to get the static bits of All to go
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -30,7 +44,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
 
         // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(exampleSubsystem);
+        SmartDashboard.putData(All.exampleSubsystem);
     }
 
     public CommandBase(String name) {

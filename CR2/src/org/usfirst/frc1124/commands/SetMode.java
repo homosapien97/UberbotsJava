@@ -3,25 +3,30 @@ package org.usfirst.frc1124.commands;
 
 import org.usfirst.frc1124.OI;
 import org.usfirst.frc1124.RobotState;
+import org.usfirst.frc1124.subsystems.DriveSubsystem;
 import org.usfirst.frc1124.ub.enums.DriveType;
 import org.usfirst.frc1124.ub.enums.Mode;
 
-public class Arcade extends CommandBase {
+/**
+ *
+ * @author bradmiller
+ */
+public class SetMode extends CommandBase {
 
-    public Arcade() {
+    public SetMode() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(CommandBase.drive);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	drive.setMode(RobotState.driveType);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drive.drive(OI.joystick1, true);
+    	if(OI.joystick1.getRawButton(OI.js1ButtonArcade)) {
+    		DriveSubsystem.setDriveType(DriveType.ARCADE);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
