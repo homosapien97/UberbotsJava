@@ -49,4 +49,10 @@ public class RobotMap {
 	public static final int usbJoystick1 = 0;
 	public static final int usbJoystick2 = 1;
 	public static final int usbJoystick3 = 2;
+	
+	private static final double wheelDiameterIN = 6;
+	private static final double radiansPerRevolution = Math.PI * 2;
+	private static final double encoderPulsesPerRevolution = 250; //should be 256, but it always skips some
+	public static final double driveDistPerCount = Math.PI * wheelDiameterIN / encoderPulsesPerRevolution;
+	public static final double armDistPerCount = radiansPerRevolution / encoderPulsesPerRevolution;
 }

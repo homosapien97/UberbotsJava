@@ -14,13 +14,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-import org.usfirst.frc1124.commands.CommandBase;
-import org.usfirst.frc1124.commands.ExampleCommand;
-
-
+import org.usfirst.frc1124.commands.*;
+import org.usfirst.frc1124.subsystems.DriveSubsystem;
+import org.usfirst.frc1124.ub.enums.DriveType;
 import org.usfirst.frc1124.ub.enums.Mode;
-
-import edu.wpi.first.wpilibj.Timer;
+import org.usfirst.frc1124.ub.support.UBMethods;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,20 +28,24 @@ import edu.wpi.first.wpilibj.Timer;
  * directory.
  */
 public class CommandBasedRobot extends IterativeRobot {
-
+	
+	//create one of each command here
     Command autonomousCommand;
+    DriveControllerCommand driveCommand;
+    CockCommand cockCommand;
+    FireCommand fireCommand;
+    DryFireCommand dryFireCommand;
+    PullCommand pullCommand;
+    PushCommand pushCommand;
     
-    Timer time;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        autonomousCommand = new AutonomousCommand();
         
-        time = new Timer();
-        time.start();
         // Initialize all subsystems
         CommandBase.init();
     }
@@ -67,7 +69,16 @@ public class CommandBasedRobot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
+		
 		RobotState.mode = Mode.TELEOP;
+		
+		//instantiate all teleop commands
+		driveCommand = new DriveControllerCommand();
+		cockCommand = new CockCommand();
+		fireCommand = new FireCommand();
+		dryFireCommand = new DryFireCommand();
+		
+		driveCommand.start(); //having drive as a command may lower responsiveness, consider changing.
 		
     }
 
@@ -75,6 +86,23 @@ public class CommandBasedRobot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        if(OI.joystick1.getRawButton(OI.js1_arcadeButton)) {
+    		DriveSubsystem.setDriveType(DriveType.ARCADE);
+    	}
+    	if(OI.joystick1.getRawButton(OI.js1_cockButton)) {
+    		cockCommand.start();
+    	}
+    	if(OI.joystick1.getTrigger() || OI.joystick1.getRawButton(OI.js1_fireButton)) {
+    		fireCommand.start();
+    	}
+    	if(OI.joystick1.getRawButton(OI.js1_dryFireButton)) {
+    		dryFireCommand.start();
+    	}
+    	switch(UBMethods.hatTransform(OI.joystick1.getRawAxis(4), OI.joystick1.getRawAxis(5))) {
+    	case 5: pullCommand.start(); break;
+    	case 3: pushCommand.start(); break;
+    	default: pullCommand.cancel(); pushCommand.cancel(); //I hope cancel isn't too expensive...
+    	}
+    	Scheduler.getInstance().run();
     }
 }

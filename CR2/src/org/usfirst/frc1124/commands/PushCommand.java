@@ -1,35 +1,28 @@
 
 package org.usfirst.frc1124.commands;
 
-import org.usfirst.frc1124.OI;
-import org.usfirst.frc1124.RobotState;
 import org.usfirst.frc1124.subsystems.All;
-import org.usfirst.frc1124.subsystems.DriveSubsystem;
-import org.usfirst.frc1124.ub.enums.Mode;
+import org.usfirst.frc1124.subsystems.Belts;
 
-public class GoDrive extends CommandBase {
+public class PushCommand extends CommandBase {
 
-    public GoDrive() {
+    public PushCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(All.drive);
+    	requires(All.belts);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	drive.setDriveType(DriveType.ARCADE);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveSubsystem.drive(OI.joystick1, true);
+    	Belts.push();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(RobotState.mode.value == Mode.DISABLED.value) {
-    		return true;
-    	}
         return false;
     }
 

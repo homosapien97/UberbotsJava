@@ -4,3 +4,18 @@ MIDlet-Vendor: FIRST
 MIDlet-1: CommandBasedRobot, , org.usfirst.frc1124.CommandBasedRobot
 MicroEdition-Profile: IMP-1.0
 MicroEdition-Configuration: CLDC-1.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

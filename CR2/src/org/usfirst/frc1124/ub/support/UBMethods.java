@@ -31,4 +31,23 @@ public class UBMethods {
 		hdrive_hmotor.set((hdrive_X > 1) ? 1 : ((hdrive_X < -1) ? -1 : hdrive_X));
 		
 	}
+	
+	private static int hatTransform_x;
+	private static int hatTransform_y;
+	public static int hatTransform(double xin, double yin) {
+		hatTransform_x = (int) (xin + 1);
+		hatTransform_y = (int) (yin + 1);
+		return hatTransform_x * 3 + hatTransform_y;
+		/* 
+		 * 0:SW
+		 * 1:W
+		 * 2:NW
+		 * 3:S
+		 * 4:rest
+		 * 5:N
+		 * 6:SE
+		 * 7:E
+		 * 8:NE
+		 */
+	}
 }

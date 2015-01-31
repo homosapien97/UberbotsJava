@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1124.OI;
-import org.usfirst.frc1124.RobotMap;
 import org.usfirst.frc1124.subsystems.All;
-import org.usfirst.frc1124.subsystems.DriveSubsystem;
-import org.usfirst.frc1124.subsystems.ExampleSubsystem;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
