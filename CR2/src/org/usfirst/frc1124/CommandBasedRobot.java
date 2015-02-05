@@ -106,3 +106,4 @@ public class CommandBasedRobot extends IterativeRobot {
     	Scheduler.getInstance().run();
     }
 }
+//TODO create Arm and Drive GOTO commands

@@ -3,21 +3,23 @@ package org.usfirst.frc1124.subsystems;
 
 import org.usfirst.frc1124.RobotMap;
 
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Belts extends Subsystem {
+public class LatchSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	private static final double IN_SPEED = -1.0;
-	private static final double OUT_SPEED = 1.0;
-	private static final Jaguar belt = new Jaguar(RobotMap.pwmPickupBelt);	
 	
-	public static void pull() {
-		belt.set(IN_SPEED);
+	private static Solenoid latch = new Solenoid(RobotMap.solLatchA, RobotMap.solLatchB);
+	
+	public static void close() {
+		latch.set(true);
 	}
-	public static void push() {
-		belt.set(OUT_SPEED);
+	public static void open() {
+		latch.set(false);
+	}
+	public static boolean get() { //closed is true
+		return latch.get();
 	}
 	
     public void initDefaultCommand() {
@@ -25,7 +27,8 @@ public class Belts extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public Belts() {
+    public LatchSubsystem() {
     	super();
     }
 }
+

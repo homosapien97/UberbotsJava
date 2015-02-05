@@ -23,30 +23,59 @@ public class DriveSubsystem extends Subsystem {
 	private static final double Ki = 0.001;		//placeholder value
 	private static final double Kd = 0.1;		//placeholder value
 	private static final double MAX_SPEED = 1.0;
+	private static final double TOLERANCE = 0.05;
 	private static final Encoder leftEncoder = new Encoder(RobotMap.dioDriveEncoderLeftChannelA,
 			RobotMap.dioDriveEncoderLeftChannelB);
 	private static final Encoder rightEncoder = new Encoder(RobotMap.dioDriveEncoderRightChannelA,
 			RobotMap.dioDriveEncoderRightChannelB);
 	private static final SafeJaguar left = new SafeJaguar(RobotMap.pwmLeftDrive, leftEncoder, 
-			Kp, Ki, Kd, MAX_SPEED);
+			Kp, Ki, Kd, SafeJaguar.DEFAULT_ROTATION, SafeJaguar.DEFAULT_ROTATION, MAX_SPEED, TOLERANCE);
 	private static final SafeJaguar right = new SafeJaguar(RobotMap.pwmRightDrive, rightEncoder,
-			Kp, Ki, Kd, MAX_SPEED);
+			Kp, Ki, Kd, SafeJaguar.DEFAULT_ROTATION, SafeJaguar.DEFAULT_ROTATION, MAX_SPEED, TOLERANCE);
 	private static final RobotDrive drive = new RobotDrive(RobotMap.pwmLeftDrive, RobotMap.pwmRightDrive);
 	private static final Solenoid shifter = new Solenoid(RobotMap.solShifterA, RobotMap.solShifterB);
 	
-	public static boolean goTo(double pos, double tolerance) {
-		return left.goTo(pos, tolerance) && right.goTo(pos, tolerance);
+	public static boolean goTo(double pos, boolean resetEncoder) {
+		if(resetEncoder) {
+			left.resetEncoder();
+			right.resetEncoder();
+		}
+		left.goTo(pos);
+		right.goTo(pos);
+		return left.atSetpoint() && right.atSetpoint();
+	}
+	public static boolean turn(double l, double r, boolean resetEncoder) {
+		if(resetEncoder) {
+			left.resetEncoder();
+			right.resetEncoder();
+		}
+		left.goTo(l);
+		right.goTo(r);
+		return left.atSetpoint() && right.atSetpoint();
+	}
+	public static boolean turn(double radians, boolean resetEncoder) {
+		if(resetEncoder) {
+			left.resetEncoder();
+			right.resetEncoder();
+		}
+		left.goTo(RobotMap.widthBetweenWheelsIN / -2 * radians);
+		right.goTo(RobotMap.widthBetweenWheelsIN / 2 * radians);
+		return left.atSetpoint() && right.atSetpoint();
 	}
 	public static boolean at(double pos, double tolerance) {
-		return left.at(pos, tolerance) && right.at(pos, tolerance);
+		return left.atSetpoint() && right.atSetpoint();
+	}
+	public static void resetDriveDist() {
+		left.resetEncoder();
+		right.resetEncoder();
 	}
 	public static void disablePID() {
 		left.disablePID();
 		right.disablePID();
 	}
 	public static void hold() {
-		right.hold();
-		left.hold();
+		left.holdPosition();
+		right.holdPosition();
 	}
 	public static void cancelHold() { //does the exact same thing as disablePID()
 		disablePID();

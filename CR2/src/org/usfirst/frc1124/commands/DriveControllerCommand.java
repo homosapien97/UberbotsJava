@@ -3,7 +3,7 @@ package org.usfirst.frc1124.commands;
 
 import org.usfirst.frc1124.OI;
 import org.usfirst.frc1124.RobotState;
-import org.usfirst.frc1124.subsystems.All;
+import org.usfirst.frc1124.subsystems.AllSubsystems;
 import org.usfirst.frc1124.subsystems.DriveSubsystem;
 import org.usfirst.frc1124.ub.enums.Mode;
 
@@ -12,7 +12,7 @@ public class DriveControllerCommand extends CommandBase {
     public DriveControllerCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(All.drive);
+    	requires(AllSubsystems.drive);
     }
 
     // Called just before this Command runs the first time

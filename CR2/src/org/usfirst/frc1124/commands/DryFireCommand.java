@@ -1,9 +1,9 @@
 
 package org.usfirst.frc1124.commands;
 
-import org.usfirst.frc1124.subsystems.All;
-import org.usfirst.frc1124.subsystems.Shooter;
-import org.usfirst.frc1124.subsystems.Latch;
+import org.usfirst.frc1124.subsystems.AllSubsystems;
+import org.usfirst.frc1124.subsystems.ShooterSubsystem;
+import org.usfirst.frc1124.subsystems.LatchSubsystem;
 
 
 public class DryFireCommand extends CommandBase {
@@ -14,8 +14,8 @@ public class DryFireCommand extends CommandBase {
     public DryFireCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(All.shooter);
-    	requires(All.latch);
+    	requires(AllSubsystems.shooter);
+    	requires(AllSubsystems.latch);
     }
 
     // Called just before this Command runs the first time
@@ -36,10 +36,10 @@ public class DryFireCommand extends CommandBase {
     	 * when the shooter is up, unlatch the latch
     	 */
     	
-    	if(!Latch.get()) {
+    	if(!LatchSubsystem.get()) {
     		state = 2;
-    	} else if(Shooter.get() || Shooter.down()) {
-    		Shooter.retract();
+    	} else if(ShooterSubsystem.get() || ShooterSubsystem.down()) {
+    		ShooterSubsystem.retract();
     		state = 0;
     	} else {
     		state = 1;
@@ -49,8 +49,8 @@ public class DryFireCommand extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(state == 0) { //when the shooter is up, unlatch and move on to next state
-    		if(Shooter.up() && System.currentTimeMillis() > fireStartTime + MOVE_DURATION) {
-    			Latch.open();
+    		if(ShooterSubsystem.up() && System.currentTimeMillis() > fireStartTime + MOVE_DURATION) {
+    			LatchSubsystem.open();
     			state++;
     		}
     	} else if(state == 1) { //when unlatched, finish

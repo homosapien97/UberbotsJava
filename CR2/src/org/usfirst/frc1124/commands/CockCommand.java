@@ -1,9 +1,9 @@
 
 package org.usfirst.frc1124.commands;
 
-import org.usfirst.frc1124.subsystems.All;
-import org.usfirst.frc1124.subsystems.Shooter;
-import org.usfirst.frc1124.subsystems.Latch;
+import org.usfirst.frc1124.subsystems.AllSubsystems;
+import org.usfirst.frc1124.subsystems.ShooterSubsystem;
+import org.usfirst.frc1124.subsystems.LatchSubsystem;
 
 
 public class CockCommand extends CommandBase {
@@ -14,8 +14,8 @@ public class CockCommand extends CommandBase {
     public CockCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(All.shooter);
-    	requires(All.latch);
+    	requires(AllSubsystems.shooter);
+    	requires(AllSubsystems.latch);
     }
 
     // Called just before this Command runs the first time
@@ -23,24 +23,24 @@ public class CockCommand extends CommandBase {
     protected void initialize() { 
     	state = 0;
     	cockStartTime = System.currentTimeMillis();
-    	Latch.open();
-    	Shooter.extend();
+    	LatchSubsystem.open();
+    	ShooterSubsystem.extend();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(state == 0) {
-    		if(Shooter.down() && System.currentTimeMillis() > cockStartTime + COCKER_DURATION) {
-    			Latch.close();
+    		if(ShooterSubsystem.down() && System.currentTimeMillis() > cockStartTime + COCKER_DURATION) {
+    			LatchSubsystem.close();
     			state++;
     		}
     	} else if(state == 1) {
     		if(System.currentTimeMillis() > cockStartTime + COCKER_DURATION + LATCH_DURATION) {
-    			Shooter.retract();
+    			ShooterSubsystem.retract();
     			state++;
     		}
     	} else if(state == 2) {
-    		if(Shooter.up() && System.currentTimeMillis() > cockStartTime + 2 * COCKER_DURATION + LATCH_DURATION) {
+    		if(ShooterSubsystem.up() && System.currentTimeMillis() > cockStartTime + 2 * COCKER_DURATION + LATCH_DURATION) {
     			state++;
     		}
     	}

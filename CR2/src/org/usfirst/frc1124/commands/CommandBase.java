@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1124.OI;
-import org.usfirst.frc1124.subsystems.All;
+import org.usfirst.frc1124.subsystems.AllSubsystems;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -30,7 +30,7 @@ public abstract class CommandBase extends Command {
      * scenes.
      */
     
-    {All all = new All();} //this is just to get the static bits of All to go
+    {AllSubsystems all = new AllSubsystems();} //this is just to get the static bits of All to go
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -41,7 +41,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
 
         // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(All.exampleSubsystem);
+        SmartDashboard.putData(AllSubsystems.exampleSubsystem);
     }
 
     public CommandBase(String name) {
