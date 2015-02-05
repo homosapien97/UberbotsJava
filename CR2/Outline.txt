@@ -1,0 +1,39 @@
+This document outlines the organization of the robot code
+
+Subsystems (in which input and output devices actually exist)
+	AllSubsystems:			Contains a static instance of each subsystem
+	ArmSubsystem:			Has control over the motor that controls the rotation of the feeder arm and its related encoder. Rotation is bounded. Can
+							go to any position within its given bounds. Uses SafeJaguar.
+	BeltSubsystem:			Has control over the motor that controls the belts on the feeder arm. Motor is unbounded, but still uses SafeJaguar. Can
+							either pull or push.
+	DriveSubsystem:			Has control over the motors in the drivetrain and its given encoder, and the shifter solenoids (NOTE: These two components
+							should probably be separated--do not really want to make an interrupted() call on DriveCommand whenever we shift). Motor is
+							unbounded, but still uses SafeJaguar. Can go to a position, can reset its position, can run at a certain speed, can turn.
+	LatchSubsystem:			Has control over the solenoid that controls the latch pistons on the shooter. 
+	ShooterSubsystem:		Has control over the solenoid that controls the two large pistons on the shooter, the magnetic sensors that detect whether
+							said pistons are up or down, and the light sensor that detects whether there is a ball being held in the shooter.
+
+Commands (which call methods of subsystems)
+	ArmControllerCommand:	Continuously feeds joystick input to the Arm subsystem. When the joystick is pushed up, the Arm's setpoint is increased
+							(until a bound is reached).
+	AutonomousCommand:		A set of actions to be executed with specific timings in Autonomous mode. Not yet implemented.
+	BeginFeedCommand:		Almost a copy of CockCommand, but also brings the arm to a feeding setpoint and sets the belts to pull.
+	CockCommand:			Extends the shooter, latches the latch, retracts the shooter.
+	DryFireCommand:			Fires no matter what.
+	FireCommand:			Fires if there is a ball held.
+	PullCommand:			Sets the belts to pull.
+	PushCommand:			Sets the belts to push.
+
+Enums
+	Kind of self explanatory.
+
+Support
+	EdgeDetector:			Compares a given boolean to the last given boolean, gives data about edges.
+	SafeJaguar:				An extension of the Jaguar class. Implements a PID and speed/rotation limits.
+	UBMethods:				A collection of useful generic methods.
+Top-Level
+	CommandBasedRobot		Main class containing instances of each command and the init/periodic functions for each stage of robot running.
+	OI						Contains static instances of user input devices, as well as constants for button/control numbers.
+	RobotMap				Contains constants that indicate which output devices correspond to which ports on the cRIO, as well as constants to do
+							with physical aspects of the robot.
+	RobotState				Stores global variables on the state of the robot.

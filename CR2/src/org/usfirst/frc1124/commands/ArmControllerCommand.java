@@ -44,6 +44,7 @@ public class ArmControllerCommand extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	ArmSubsystem.disablePID();
     }
     static {
     	setpoint = ArmSubsystem.getPos();
